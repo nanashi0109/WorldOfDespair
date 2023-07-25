@@ -1,21 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using Despair.Assets.Architecture._Scripts.Player;
 using UnityEngine;
 
-namespace Despair
+namespace Despair.Assets.Architecture._Scripts.Game
 {
     public class Game : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+        [SerializeField] private PlayerModel _playerModel;
 
-        // Update is called once per frame
-        void Update()
+        private void Awake()
         {
-        
+            _playerModel.Init();
         }
     }
 }
