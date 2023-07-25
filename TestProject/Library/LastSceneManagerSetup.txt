@@ -1,0 +1,5 @@
+sceneSetups:
+- path: Assets/Cainos/Pixel Art Platformer - Dungeon/Scene/SC All Props.unity
+  isLoaded: 1
+  isActive: 1
+  isSubScene: 0
