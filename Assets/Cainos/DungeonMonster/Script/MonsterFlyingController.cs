@@ -38,7 +38,7 @@ namespace Cainos.PixelArtMonster_Dungeon
         private Rigidbody2D rb2d;                                       // Rigidbody2D component on the character
 
         private bool isGrounded;                                        // is the character on ground?
-        private bool isMoving;                                          // is the character moving?
+       // private bool isMoving;                                          // is the character moving?
         private Vector2 curVel;                                         // current velocity
 
         private Collider2D[] groundCheckResult = new Collider2D[2];
@@ -91,7 +91,7 @@ namespace Cainos.PixelArtMonster_Dungeon
             //has movement input
             if ( inputMove.magnitude > 0.01f )
             {
-                isMoving = true;
+              //  isMoving = true;
 
                 //if current speed is out of allowed range, let it fall to the allowed range
                 bool shouldMove = true;
@@ -110,7 +110,7 @@ namespace Cainos.PixelArtMonster_Dungeon
             //no movement input, brake to speed zero
             else
             {
-                isMoving = false;
+             //   isMoving = false;
                 curVel = Vector2.MoveTowards(curVel, Vector2.zero, brakeAcc * Time.deltaTime);
             }
 

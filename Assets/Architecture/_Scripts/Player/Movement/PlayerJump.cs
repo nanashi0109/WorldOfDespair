@@ -14,7 +14,11 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
         public void Jump(GroundCheck groundCheck)
         {
             if (groundCheck.IsGround)
+            {
+                _playerModel.GetAnimator.SetTrigger("JumpTrigger");
                 _playerModel.GetRigidbody.AddForce(Vector2.up * _playerModel.JumpForce, ForceMode2D.Impulse);
+
+            }
         }
     }
 }

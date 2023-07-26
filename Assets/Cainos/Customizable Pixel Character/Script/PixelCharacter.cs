@@ -234,26 +234,6 @@ namespace Cainos.CustomizablePixelCharacter
             }
         }
 
-        //[FoldoutGroup("Customization"), ShowInInspector]
-        //public Material ShoesFrontMaterial
-        //{
-        //    get
-        //    {
-        //        if (!shoesFront) return null;
-        //        return shoesFront.sharedMaterial;
-        //    }
-        //    set
-        //    {
-        //        if (!shoesFront) return;
-
-        //        #if UNITY_EDITOR
-        //            UnityEditor.Undo.RecordObject(shoesFront, "Modify Shoes Front Material");
-        //        #endif
-
-        //        shoesFront.sharedMaterial = value;
-        //    }
-        //}
-
         [FoldoutGroup("Customization"), ShowInInspector]
         public Material BackMaterial
         {
