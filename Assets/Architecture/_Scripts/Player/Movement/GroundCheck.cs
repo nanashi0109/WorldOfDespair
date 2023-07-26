@@ -6,14 +6,14 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
     {
         public bool IsGround { get; private set; }
 
-        private void OnTriggerExit2D(Collider2D collision)
+        private void OnCollisionExit2D(Collision2D collision)
         {
             if (collision.gameObject.tag == "Ground")
             {
                 IsGround = false;
             }
         }
-        private void OnTriggerStay2D(Collider2D collision)
+        private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.tag == "Ground")
             {

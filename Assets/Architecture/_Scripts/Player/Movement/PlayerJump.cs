@@ -11,12 +11,12 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
             _playerModel = playerModel;
         }
 
-        public void Jump(GroundCheck groundCheck)
+        public void Jump(GroundCheck groundCheck, float jumpForce)
         {
             if (groundCheck.IsGround)
             {
                 _playerModel.GetAnimator.SetTrigger("JumpTrigger");
-                _playerModel.GetRigidbody.AddForce(Vector2.up * _playerModel.JumpForce, ForceMode2D.Impulse);
+                _playerModel.GetRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
             }
         }

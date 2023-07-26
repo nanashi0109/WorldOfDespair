@@ -11,8 +11,6 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
 
         private float _horizontalVelocity;
 
-        public bool IsWalk { get; private set; }
-        public bool IsRun { get; private set; }
         public float HorizontalVelocity => _horizontalVelocity;
 
         public PlayerMovement(PlayerModel playerModel, PlayerInputSystem playerInputSystem)
@@ -20,30 +18,17 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
             _playerModel = playerModel;
             _playerInputSystem = playerInputSystem;
         }
-        public void FixedUpdateMovement()
+        public void FixedUpdateMovement(float walkSpeed, float runSpeed)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                IsRun = true;
-                IsWalk = false;
-            }
-            else
-            {
-                IsRun = false;
-                IsWalk = true;
-            }
-
-
-
-            Movement();
+            Movement(walkSpeed, runSpeed);
             HorizontalFlip();        
         }
-        private void Movement()
+        private void Movement(float walkSpeed, float runSpeed)
         {
-            if (IsWalk)
-                _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * _playerModel.WalkingSpeed;
-            else if (IsRun)
-                _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * _playerModel.RunningSpeed;
+            if (_playerInputSystem.IsButtonRun)
+                _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * runSpeed;
+            else
+                _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * walkSpeed;
 
             _playerModel.GetRigidbody.velocity = new Vector2(_horizontalVelocity, _playerModel.GetRigidbody.velocity.y);
             
@@ -53,15 +38,10 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
         {
             var scale = _playerModel.gameObject.transform.localScale;
             if (_horizontalVelocity > 0)
-            {
                 scale.x = 1;
-                Debug.Log(1);
-            }
             else if (_horizontalVelocity < 0)
-            {
                 scale.x = -1;
-                Debug.Log(-1);
-            }
+
             _playerModel.gameObject.transform.localScale = scale;
         }
     }
