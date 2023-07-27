@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Data;
+using UnityEngine;
 
 namespace Despair.Assets.Architecture._Scripts.Player.Movement
 {
@@ -15,14 +16,16 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
         {
             if (isButtonCrouch)
             {
-                _playerModel.GetPlayerCollider.size = new Vector2(0.375f, 1);
-                _playerModel.GetPlayerCollider.offset = new Vector2(0, 1);
+                _playerModel.CrouchCollider.enabled = true;
+                _playerModel.GetPlayerCollider.enabled = false;
             }
+
             else
             {
-                _playerModel.GetPlayerCollider.size = _playerModel.DefaultColliderSize;
-                _playerModel.GetPlayerCollider.offset = _playerModel.DefaultColliderOffset;
+                _playerModel.CrouchCollider.enabled = false;
+                _playerModel.GetPlayerCollider.enabled = true;
             }
+
         }
     }
 }

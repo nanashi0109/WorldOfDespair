@@ -11,19 +11,22 @@ namespace Despair.Assets.Architecture._Scripts.Player
         public CapsuleCollider2D GetPlayerCollider => _playerCollider;
         public Rigidbody2D GetRigidbody => _rigidbody;
         public Animator GetAnimator => _animator;
-        public Vector2 DefaultColliderSize { get { return _defaultColliderSize; } private set { } }
-        public Vector2 DefaultColliderOffset { get { return _defaultColliderOffset; } private set { } }
+        public CapsuleCollider2D CrouchCollider => _crouchCollider;
+        public CapsuleCollider2D CrawlCollider => _crawlCollider;
         #endregion
 
 
         #region Field
-        [Header("Player Data")]
-        private Vector2 _defaultColliderSize = new Vector2(0.375f, 1.4f);
-        private Vector2 _defaultColliderOffset = new Vector2(0, 1.2f);
+        [Header("Player Colliders")]
+        [SerializeField] private CapsuleCollider2D _crouchCollider;
+        [SerializeField] private CapsuleCollider2D _crawlCollider;
+
 
         [Header("Movement Data")]
         [SerializeField] private float _walkingSpeed;
         [SerializeField] private float _runningSpeed;
+        [SerializeField] private float _crouchingSpeed;
+        [SerializeField] private float _crawlingSpeed;
         [SerializeField] private float _jumpForce;
         #endregion
 
@@ -33,10 +36,12 @@ namespace Despair.Assets.Architecture._Scripts.Player
         private Animator _animator;
 
         [SerializeField] private GroundCheck _groundCheck;
+        [SerializeField] private CheckingObjectsAbove _checkingObjectsAbove;
         private PlayerMovement _playerMovement;
         private PlayerJump _playerJump;
         private PlayerInputSystem _playerInputSystem;
         private PlayerCrouch _playerCrouch;
+        private PlayerCrawl _playerCrawl;
         private PlayerRoll _playerRoll;
         #endregion
 
@@ -46,16 +51,17 @@ namespace Despair.Assets.Architecture._Scripts.Player
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
 
-            _playerInputSystem = new PlayerInputSystem();
+            _playerInputSystem = new PlayerInputSystem(_checkingObjectsAbove);
             _playerJump = new PlayerJump(this);
             _playerMovement = new PlayerMovement(this, _playerInputSystem);
             _playerCrouch = new PlayerCrouch(this);
+            _playerCrawl = new PlayerCrawl(this);
         }
 
         private void FixedUpdate()
         {
             if(IsMove)
-                _playerMovement.FixedUpdateMovement(_walkingSpeed, _runningSpeed);
+                _playerMovement.FixedUpdateMovement(_walkingSpeed, _runningSpeed, _crawlingSpeed, _crouchingSpeed);
         }
 
         private void Update()
@@ -63,8 +69,12 @@ namespace Despair.Assets.Architecture._Scripts.Player
             _playerInputSystem.UpdateInputSystem();
 
 
-            if(!_groundCheck.IsGround)
+            if (_groundCheck.IsGround)
+            {
                 _playerCrouch.Crouch(_playerInputSystem.IsButtonCrouch);
+                _playerCrawl.Crawl(_playerInputSystem.IsButtonCrawl);
+            }
+                
 
             if (_playerInputSystem.IsButtonJump)
                 _playerJump.Jump(_groundCheck, _jumpForce);
@@ -79,6 +89,7 @@ namespace Despair.Assets.Architecture._Scripts.Player
             _animator.SetFloat("VerticalVelocity", _rigidbody.velocity.y);
             _animator.SetBool("IsGround", _groundCheck.IsGround);
             _animator.SetBool("IsCrouch", _playerInputSystem.IsButtonCrouch);
+            _animator.SetBool("IsCrawl", _playerInputSystem.IsButtonCrawl);
         }
     }
 }

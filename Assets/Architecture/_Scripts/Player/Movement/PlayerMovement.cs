@@ -1,6 +1,7 @@
 using UnityEngine;
 using Despair.Assets.Architecture._Scripts.Player;
 using System.Data;
+using UnityEngine.Experimental.GlobalIllumination;
 
 namespace Despair.Assets.Architecture._Scripts.Player.Movement
 {
@@ -18,15 +19,19 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
             _playerModel = playerModel;
             _playerInputSystem = playerInputSystem;
         }
-        public void FixedUpdateMovement(float walkSpeed, float runSpeed)
+        public void FixedUpdateMovement(float walkSpeed, float runSpeed, float crawlSpeed, float crouchSpeed)
         {
-            Movement(walkSpeed, runSpeed);
+            Movement(walkSpeed, runSpeed, crawlSpeed, crouchSpeed );
             HorizontalFlip();        
         }
-        private void Movement(float walkSpeed, float runSpeed)
+        private void Movement(float walkSpeed, float runSpeed, float crawlSpeed, float crouchSpeed)
         {
             if (_playerInputSystem.IsButtonRun)
                 _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * runSpeed;
+            else if (_playerInputSystem.IsButtonCrawl)
+                _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * crawlSpeed;
+            else if ( _playerInputSystem.IsButtonCrouch)
+                _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * crouchSpeed;
             else
                 _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * walkSpeed;
 
