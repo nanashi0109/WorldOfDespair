@@ -10,6 +10,7 @@ namespace Despair.Assets.Architecture._Scripts.Player
         public bool IsButtonCrouch { get; private set; }
         public bool IsButtonRun { get; private set; }
         public bool IsButtonCrawl { get; private set; }
+        public bool IsButtonRoll { get;  set; }
 
         private float _horizontalDirection;
 
@@ -45,32 +46,45 @@ namespace Despair.Assets.Architecture._Scripts.Player
                 IsButtonJump = false;
             #endregion
 
-            if (_checkingObjectsAbove.IsStandUp)
+            if (!_checkingObjectsAbove.IsStandUp)
             {
-                #region Crouch
-                if (Input.GetKeyDown(KeyCode.C) && !IsButtonCrouch)
-                {
-                    IsButtonCrouch = true;
-                    IsButtonCrawl = false;
-                }
-                else if (Input.GetKeyDown(KeyCode.C) && IsButtonCrouch || IsButtonRun)
-                {
-                    IsButtonCrouch = false;
-                }
-
-                #endregion
-
-                #region Crawl
-                if (Input.GetKeyDown(KeyCode.Z)  && !IsButtonCrawl )
-                {
-                    IsButtonCrawl = true;
-                }
-                else if (Input.GetKeyDown(KeyCode.Z) && IsButtonCrawl || IsButtonRun)
-                {
-                    IsButtonCrawl = false;
-                }
-                #endregion
+                IsButtonCrawl = true;
             }
+            #region Crouch
+            if (Input.GetKeyDown(KeyCode.C) && !IsButtonCrouch)
+            {
+                IsButtonCrouch = true;
+                IsButtonCrawl = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.C) && IsButtonCrouch || IsButtonRun)
+            {
+                IsButtonCrouch = false;
+            }
+
+            #endregion
+
+            #region Crawl
+            if (Input.GetKeyDown(KeyCode.Z) && !IsButtonCrawl)
+            {
+                IsButtonCrawl = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Z) && IsButtonCrawl || IsButtonRun)
+            {
+                IsButtonCrawl = false;
+            }
+            #endregion
+
+            #region Roll
+            if (Input.GetKeyDown(KeyCode.LeftControl) &&  !IsButtonCrawl)
+            {
+                IsButtonRoll = true;
+                Debug.Log(IsButtonRoll);
+            }
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                IsButtonRoll = false;
+            }
+            #endregion
         }
 
         private void HorizontalDir()

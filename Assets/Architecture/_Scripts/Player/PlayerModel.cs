@@ -13,6 +13,7 @@ namespace Despair.Assets.Architecture._Scripts.Player
         public Animator GetAnimator => _animator;
         public CapsuleCollider2D CrouchCollider => _crouchCollider;
         public CapsuleCollider2D CrawlCollider => _crawlCollider;
+        public CapsuleCollider2D RollCollider => _rollCollider;
         #endregion
 
 
@@ -20,6 +21,7 @@ namespace Despair.Assets.Architecture._Scripts.Player
         [Header("Player Colliders")]
         [SerializeField] private CapsuleCollider2D _crouchCollider;
         [SerializeField] private CapsuleCollider2D _crawlCollider;
+        [SerializeField] private CapsuleCollider2D _rollCollider;
 
 
         [Header("Movement Data")]
@@ -28,6 +30,8 @@ namespace Despair.Assets.Architecture._Scripts.Player
         [SerializeField] private float _crouchingSpeed;
         [SerializeField] private float _crawlingSpeed;
         [SerializeField] private float _jumpForce;
+        [SerializeField] private float _rollForce;
+        [SerializeField] private float _rollCooldown;
         #endregion
 
         #region Links
@@ -35,6 +39,7 @@ namespace Despair.Assets.Architecture._Scripts.Player
         private CapsuleCollider2D _playerCollider;
         private Animator _animator;
 
+        [Header("Links")]
         [SerializeField] private GroundCheck _groundCheck;
         [SerializeField] private CheckingObjectsAbove _checkingObjectsAbove;
         private PlayerMovement _playerMovement;
@@ -43,6 +48,7 @@ namespace Despair.Assets.Architecture._Scripts.Player
         private PlayerCrouch _playerCrouch;
         private PlayerCrawl _playerCrawl;
         private PlayerRoll _playerRoll;
+
         #endregion
 
         public void Init()
@@ -56,17 +62,23 @@ namespace Despair.Assets.Architecture._Scripts.Player
             _playerMovement = new PlayerMovement(this, _playerInputSystem);
             _playerCrouch = new PlayerCrouch(this);
             _playerCrawl = new PlayerCrawl(this);
+            _playerRoll = new PlayerRoll(this, _playerInputSystem);
         }
 
         private void FixedUpdate()
         {
-            if(IsMove)
+            if (_playerInputSystem.IsButtonRoll) return;
+
+            if (IsMove)
                 _playerMovement.FixedUpdateMovement(_walkingSpeed, _runningSpeed, _crawlingSpeed, _crouchingSpeed);
         }
 
         private void Update()
         {
+            StartCoroutine(_playerRoll.RollUpdate(_rollForce, _rollCooldown));
             _playerInputSystem.UpdateInputSystem();
+
+            if (_playerInputSystem.IsButtonRoll) return;
 
 
             if (_groundCheck.IsGround)
