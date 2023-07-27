@@ -1,7 +1,4 @@
 using UnityEngine;
-using Despair.Assets.Architecture._Scripts.Player;
-using System.Data;
-using UnityEngine.Experimental.GlobalIllumination;
 
 namespace Despair.Assets.Architecture._Scripts.Player.Movement
 {

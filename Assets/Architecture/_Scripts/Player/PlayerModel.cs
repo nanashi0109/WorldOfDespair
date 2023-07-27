@@ -67,7 +67,7 @@ namespace Despair.Assets.Architecture._Scripts.Player
 
         private void FixedUpdate()
         {
-            if (_playerInputSystem.IsButtonRoll) return;
+            if (_playerRoll.IsRolling) return;
 
             if (IsMove)
                 _playerMovement.FixedUpdateMovement(_walkingSpeed, _runningSpeed, _crawlingSpeed, _crouchingSpeed);
@@ -75,23 +75,24 @@ namespace Despair.Assets.Architecture._Scripts.Player
 
         private void Update()
         {
-            StartCoroutine(_playerRoll.RollUpdate(_rollForce, _rollCooldown));
+            AnimationUpdate();
             _playerInputSystem.UpdateInputSystem();
 
-            if (_playerInputSystem.IsButtonRoll) return;
+            if (_playerRoll.IsRolling) 
+                return;
 
 
             if (_groundCheck.IsGround)
             {
                 _playerCrouch.Crouch(_playerInputSystem.IsButtonCrouch);
                 _playerCrawl.Crawl(_playerInputSystem.IsButtonCrawl);
+                StartCoroutine(_playerRoll.RollUpdate(_rollForce, _rollCooldown));
             }
                 
-
             if (_playerInputSystem.IsButtonJump)
+            {
                 _playerJump.Jump(_groundCheck, _jumpForce);
-
-            AnimationUpdate();
+            }
         }
 
         private void AnimationUpdate()

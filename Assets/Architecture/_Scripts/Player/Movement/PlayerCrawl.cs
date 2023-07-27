@@ -14,6 +14,7 @@
             if (isButtonCrawl)
             {
                 _playerModel.CrawlCollider.enabled = true;
+                _playerModel.CrouchCollider.enabled = false;
                 _playerModel.GetPlayerCollider.enabled = false;
             }
             else

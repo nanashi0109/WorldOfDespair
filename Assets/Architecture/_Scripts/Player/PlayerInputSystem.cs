@@ -40,8 +40,11 @@ namespace Despair.Assets.Architecture._Scripts.Player
             #endregion
 
             #region Jump
-            if (Input.GetKeyDown(KeyCode.Space) && !IsButtonCrawl && !IsButtonCrouch)
+            if (Input.GetKeyDown(KeyCode.Space) && !IsButtonCrawl)
+            {
                 IsButtonJump = true;
+                IsButtonCrouch = false;
+            }
             else 
                 IsButtonJump = false;
             #endregion
@@ -49,6 +52,7 @@ namespace Despair.Assets.Architecture._Scripts.Player
             if (!_checkingObjectsAbove.IsStandUp)
             {
                 IsButtonCrawl = true;
+                IsButtonRun = false;
             }
             #region Crouch
             if (Input.GetKeyDown(KeyCode.C) && !IsButtonCrouch)
@@ -78,7 +82,6 @@ namespace Despair.Assets.Architecture._Scripts.Player
             if (Input.GetKeyDown(KeyCode.LeftControl) &&  !IsButtonCrawl)
             {
                 IsButtonRoll = true;
-                Debug.Log(IsButtonRoll);
             }
             if (Input.GetKeyUp(KeyCode.LeftControl))
             {

@@ -1,5 +1,4 @@
-﻿using System.Data;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Despair.Assets.Architecture._Scripts.Player.Movement
 {
@@ -17,9 +16,9 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
             if (isButtonCrouch)
             {
                 _playerModel.CrouchCollider.enabled = true;
+                _playerModel.CrawlCollider.enabled = false;
                 _playerModel.GetPlayerCollider.enabled = false;
             }
-
             else
             {
                 _playerModel.CrouchCollider.enabled = false;
