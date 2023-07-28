@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Despair.Assets.Architecture._Scripts.Player.Movement
@@ -6,18 +7,23 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
     {
         private PlayerModel _playerModel;
 
+        private bool _isJump = true;
+
         public PlayerJump(PlayerModel playerModel)
         {
             _playerModel = playerModel;
         }
 
-        public void Jump(GroundCheck groundCheck, float jumpForce)
+        public IEnumerator Jump(GroundCheck groundCheck, float jumpForce)
         {
-            if (groundCheck.IsGround)
+            if (groundCheck.IsGround && _isJump)
             {
                 _playerModel.GetAnimator.SetTrigger("JumpTrigger");
                 _playerModel.GetRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
+                _isJump = false;
+                yield return new WaitForSeconds(1f);
+                _isJump = true;
             }
         }
     }

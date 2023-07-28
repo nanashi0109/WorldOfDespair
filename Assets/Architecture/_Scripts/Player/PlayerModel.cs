@@ -91,7 +91,7 @@ namespace Despair.Assets.Architecture._Scripts.Player
                 
             if (_playerInputSystem.IsButtonJump)
             {
-                _playerJump.Jump(_groundCheck, _jumpForce);
+                StartCoroutine(_playerJump.Jump(_groundCheck, _jumpForce));
             }
         }
 

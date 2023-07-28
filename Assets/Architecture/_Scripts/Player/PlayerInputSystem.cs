@@ -74,7 +74,8 @@ namespace Despair.Assets.Architecture._Scripts.Player
             }
             else if (Input.GetKeyDown(KeyCode.Z) && IsButtonCrawl || IsButtonRun)
             {
-                IsButtonCrawl = false;
+                if(_checkingObjectsAbove.IsStandUp)
+                    IsButtonCrawl = false;
             }
             #endregion
 
