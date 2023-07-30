@@ -40,12 +40,12 @@ namespace Despair.Assets.Architecture._Scripts.Player
         [SerializeField] private float _rollForce;
         [SerializeField] private float _rollCooldown;
 
-        [Header("AttackData")]
+        [Header("Attack Data")]
         [SerializeField] private int _damage;
         [SerializeField] private float _attackCooldown;
         [SerializeField] private float _attackRange;
-        [SerializeField] private LayerMask _damageEnemyLayer;
         [SerializeField] private Transform _weaponSlot;
+        [SerializeField] private LayerMask _damageEnemyLayer;
         #endregion
 
         #region Links
