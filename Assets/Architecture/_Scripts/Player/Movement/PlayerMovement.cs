@@ -23,14 +23,18 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
         }
         private void Movement(float walkSpeed, float runSpeed, float crawlSpeed, float crouchSpeed)
         {
-            if (_playerInputSystem.IsButtonRun)
-                _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * runSpeed;
-            else if (_playerInputSystem.IsButtonCrawl)
-                _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * crawlSpeed;
-            else if ( _playerInputSystem.IsButtonCrouch)
-                _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * crouchSpeed;
+            float speed = 0;
+
+            if (_playerInputSystem.ButtonRun())
+                speed = runSpeed;
+            else if (_playerInputSystem.ButtonCrawl())
+                speed = crawlSpeed;
+            else if ( _playerInputSystem.ButtonCrouch())
+                speed = crouchSpeed;
             else
-                _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * walkSpeed;
+                speed = walkSpeed;
+
+            _horizontalVelocity = _playerInputSystem.GetHorizontalDirection * speed;
 
             _playerModel.GetRigidbody.velocity = new Vector2(_horizontalVelocity, _playerModel.GetRigidbody.velocity.y);
             

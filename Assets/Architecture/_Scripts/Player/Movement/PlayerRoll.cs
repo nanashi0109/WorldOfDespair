@@ -21,7 +21,7 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
 
         public IEnumerator RollUpdate(float rollForce, float rollColldown)
         {
-            if (_playerInputSystem.IsButtonRoll && !_isRolling && _canRolling)
+            if (_playerInputSystem.ButtonRoll() && !_isRolling && _canRolling)
             {
                 _playerModel.RollCollider.enabled = true;
                 _playerModel.GetPlayerCollider.enabled = false;
@@ -32,7 +32,7 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
 
                 _isRolling = true;
                 _canRolling = false;
-                _playerInputSystem.IsButtonRoll = false;
+                _playerInputSystem._isButtonRoll = false;
 
                 _playerModel.GetRigidbody.velocity = new Vector2(_playerModel.gameObject.transform.localScale.x * rollForce, 0);
 
