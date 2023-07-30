@@ -1,4 +1,5 @@
 ﻿using Despair.Assets.Architecture._Scripts.Player.Movement;
+using System.Threading;
 using UnityEngine;
 
 namespace Despair.Assets.Architecture._Scripts.Player
@@ -6,10 +7,13 @@ namespace Despair.Assets.Architecture._Scripts.Player
     public class PlayerInputSystem
     {
         public float GetHorizontalDirection => _horizontalDirection;
+
         private bool _isButtonJump;
         private bool _isButtonCrouch;
         private bool _isButtonRun;
         private bool _isButtonCrawl;
+        private bool _isButtonAttack;
+
         public bool _isButtonRoll { get;  set; }
 
         private float _horizontalDirection;
@@ -112,6 +116,20 @@ namespace Despair.Assets.Architecture._Scripts.Player
             }
 
             return _isButtonRoll;
+        }
+
+        public bool ButtonAttack()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                _isButtonAttack = true;
+            }
+            else
+            {
+                _isButtonAttack = false;
+            }
+
+            return _isButtonAttack;
         }
 
         private void HorizontalDir()

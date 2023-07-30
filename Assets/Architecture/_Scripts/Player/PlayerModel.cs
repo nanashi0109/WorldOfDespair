@@ -43,6 +43,9 @@ namespace Despair.Assets.Architecture._Scripts.Player
         [Header("AttackData")]
         [SerializeField] private int _damage;
         [SerializeField] private float _attackCooldown;
+        [SerializeField] private float _attackRange;
+        [SerializeField] private LayerMask _damageEnemyLayer;
+        [SerializeField] private Transform _weaponSlot;
         #endregion
 
         #region Links
@@ -107,6 +110,11 @@ namespace Despair.Assets.Architecture._Scripts.Player
             {
                 StartCoroutine(_playerJump.Jump(_groundCheck, _jumpForce));
             }
+
+            if (_playerInputSystem.ButtonAttack())
+            {
+                StartCoroutine(_playerAttack.Attack(_damage, _attackCooldown, _attackRange,_weaponSlot, _damageEnemyLayer));
+            }
         }
 
         private void AnimationUpdate()
@@ -118,6 +126,38 @@ namespace Despair.Assets.Architecture._Scripts.Player
             _animator.SetBool("IsGround", _groundCheck.IsGround);
             _animator.SetBool("IsCrouch", _playerInputSystem.ButtonCrouch());
             _animator.SetBool("IsCrawl", _playerInputSystem.ButtonCrawl());
+        }
+
+        #region Health calculate
+        public void IncreasePlayerHealth(int heal)
+        {
+            if (_playerHealth + heal <= _maxPlayerHealth)
+            {
+                _playerHealth += heal;
+            }
+            else if (_playerHealth + heal > _maxPlayerHealth)
+            {
+                _playerHealth = _maxPlayerHealth;
+            }
+        }
+        public void DecreasePlayerHealth(int damage) 
+        {
+            if (_playerHealth == 0)
+            {
+                PlayerDied();
+            }
+            _playerHealth -= damage;
+        }
+
+        public void PlayerDied()
+        {
+
+        }
+        #endregion
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(_weaponSlot.position, _attackRange);
         }
     }
 }
