@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8632446899269897361}
   - component: {fileID: 2468684946603337367}
   - component: {fileID: 4248127454265123840}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: PF Weapon - None
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -113,7 +113,7 @@ namespace Despair.Assets.Architecture._Scripts.Player
 
             if (_playerInputSystem.ButtonAttack())
             {
-                StartCoroutine(_playerAttack.Attack(_damage, _attackCooldown, _attackRange,_weaponSlot, _damageEnemyLayer));
+                StartCoroutine(_playerAttack.Attack(_damage, _attackCooldown, _attackRange, _weaponSlot, _damageEnemyLayer));
             }
         }
 

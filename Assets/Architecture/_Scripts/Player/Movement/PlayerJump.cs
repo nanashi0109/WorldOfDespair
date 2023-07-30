@@ -22,7 +22,7 @@ namespace Despair.Assets.Architecture._Scripts.Player.Movement
                 _playerModel.GetRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
                 _isJump = false;
-                yield return new WaitForSeconds(0.8f);
+                yield return new WaitForSeconds(0.6f);
                 _isJump = true;
             }
         }
