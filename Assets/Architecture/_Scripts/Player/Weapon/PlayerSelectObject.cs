@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Despair
 {
-    public class PlayerPickUpWeapon : MonoBehaviour
+    public class PlayerSelectObject : MonoBehaviour
     {
         [SerializeField] private Transform WeaponSlot;
 
