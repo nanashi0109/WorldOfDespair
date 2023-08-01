@@ -155,7 +155,7 @@ namespace Despair.Assets.Architecture._Scripts.Player
         }
         #endregion
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireSphere(_weaponSlot.position, _attackRange);
         }
